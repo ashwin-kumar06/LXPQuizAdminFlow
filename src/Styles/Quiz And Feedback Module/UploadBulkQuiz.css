@@ -1,0 +1,35 @@
+#dropzone{
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:300px;
+  width:50%;
+  margin-left:25%;
+  margin-top:2%;
+  border:2px dashed #365486;
+  padding:20px;
+}
+
+#uploadfilebtn{
+  margin-left:22%;
+}
+
+#heading{
+  color: #365486;
+}
+
+#temp{
+  margin-top:-60%;
+  margin-left:160%;
+ inline-size: 150%;
+}
+
+#selectedfilename{
+  border:2px solid #F9F5F6;
+  background-color:#F9F5F6;
+  width:250px;
+  height:40px;
+  padding:5px;
+}
+

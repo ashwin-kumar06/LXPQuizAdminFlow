@@ -1,0 +1,59 @@
+/* QuizEditor.css */
+
+.previewcontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.card-container {
+  width: 80%;
+}
+
+.question-card {
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question-card-header {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-bottom: 1px solid #ced4da;
+  border-radius: 8px 8px 0 0;
+}
+
+.question-card-body {
+  padding: 15px;
+}
+
+.question-textarea {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.options-input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.correct-answer-input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.action-icons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    width: 100%;
+  }
+}

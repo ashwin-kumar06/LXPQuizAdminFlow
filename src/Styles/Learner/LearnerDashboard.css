@@ -1,0 +1,208 @@
+.profile-card {
+   display: flex;
+   flex-direction: column;
+   width: 250px;
+   height: 290px;
+   margin-left: 100px;
+   background: linear-gradient(to right, #e6eefb 50%, #27235C 50%);
+   overflow: hidden;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   perspective: 1000px;
+   transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+ 
+.profile-card:hover {
+   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+   transform: translateY(-10px);
+}
+ 
+.profile-card .card-img-top {
+   width: 150px;
+   height: 150px;
+   border-radius: 50%;
+   object-fit: cover;
+   margin: 20px auto;
+   margin-top: 25px;
+}
+ 
+.profile-card .card-body {
+   text-align: center;
+}
+ 
+.profile-card .card-title {
+   font-weight: bold;
+}
+ 
+.profile-card .card-text {
+   color: #555;
+}
+.allcont
+{
+   height: 350px;
+   margin-top: 20px;
+}
+ 
+/* Count Card Styling */
+.count-card {
+   position: relative;
+   width: 200px;
+   height: 200px;
+   margin: 20px;
+   margin-top: 50px;
+   margin-right: 2px;
+   /* margin-left: 150px; */
+ 
+   /* background: linear-gradient(to right, #f0f0f0 50%, #27235C 50%); */
+   /* background: -webkit-linear-gradient(left,  #27235C , #6d2243); */
+   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+   background-color: #e6eefb ;
+   perspective: 1000px;
+   transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+ 
+.all-card{}
+ 
+.count-card:hover {
+   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+   transform: translateY(-10px);
+}
+ 
+.count-inside {
+   position: absolute;
+   top: 55%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 150px;
+   height: 150px;
+   background-color: #fff;
+   border-radius: 60%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 2rem;
+   font-weight: bold;
+   
+   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+/* .count-inside :hover{
+   
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px);
+ } */
+ 
+ 
+ 
+ 
+.count-name {
+   color: #27235C;
+   text-align: center;
+   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+ 
+.count-recommend
+{
+   color: #27235C;
+   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   margin-left: 100px;
+}
+ 
+.count-scoreprogress{
+   color: #27235C;
+   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   margin-left: 100px;
+}
+/* .recommend{
+   width:500px;
+} */
+ 
+.course-card{
+   position: relative;
+   width: 300px;
+   height: 450px;
+   margin: 50px;
+   margin-left: 100px;
+   perspective: 1000px;
+ 
+   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+   background-color: #e6eefb ;
+   transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+   transition:  transform 0.5s ease, box-shadow 0.5s ease;
+ 
+}
+.course-card:hover{
+ 
+   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+   transform: rotateY(15deg);
+ 
+}
+.course-inside
+{
+   position: absolute;
+   top: 30%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 150px;
+   height: 150px;
+   background-color: #e6eefb ;
+   border-radius: 60%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 2rem;
+   font-weight: bold;
+   
+   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+ 
+.course-content
+{
+   flex:1 0 auto;
+ 
+}
+ 
+.course-typo{
+   margin-top: 230px;
+   margin-left: 50px;
+}
+.course-name
+{
+   color: #27235C;
+}
+.line-graph
+{
+   width:500px;
+   height: 800px;
+   margin-left: 70px;
+   color: #27235C;
+}
+.count-number
+{
+   margin-top: 30px;
+   margin-left: 0px;
+   font-size:50px
+}
+.rec-course
+{
+   /* margin-left:1px;
+   width: 350px; */
+   flex: 11 calc(25% - 20px);
+   margin: 5px;
+   max-width: calc(23% - 20px);
+}
+ 
+.recommend-container
+{
+   display: flex;
+   flex-wrap: wrap;
+ 
+}
+/* .background-container_learner{
+   background-color: #f0f0f0;
+   background-size: cover;
+   background-position: center;
+   height: 100vh;
+ 
+   display: flex;
+   justify-content: center;
+   align-items: center;
+} */

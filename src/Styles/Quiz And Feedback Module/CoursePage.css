@@ -1,0 +1,22 @@
+.accordion-button{
+    background-color: rgba(245, 245, 245, 0.907);
+}
+
+.accordion-button:focus {
+box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+color:#212529;
+}
+
+.accordion-item {
+width:40vw;
+margin-top:70px;
+margin-left:30%;
+
+}
+
+.accordion-body{
+text-align: left;
+}

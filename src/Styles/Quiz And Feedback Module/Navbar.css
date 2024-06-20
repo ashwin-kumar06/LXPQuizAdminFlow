@@ -1,0 +1,154 @@
+/* .dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.top-nav {
+    display: flex;
+
+    align-items: center;
+    background-color: #23275c;
+    color: #fff;
+    height:4rem;
+    width: 105rem;
+    position: fixed;
+}
+
+.top-nav img {
+    width: 10vw;
+    height:4vh;
+}
+
+.nav-img {
+    margin-left:10px;
+    padding:6px;
+}
+
+.user-info {
+    position: relative;
+
+    margin-left: auto;
+}
+.search-box {
+    position: relative;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    
+  }
+  
+  input[type="search"] {
+    padding: 8px 12px 8px 30px; 
+    border: none;
+    border-radius: 20px;
+    width: 80%;
+  }
+  
+  input[type="search"]::placeholder {
+    color: #aaa;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: black;
+  }
+  
+.menu-btn {
+
+    left: 30px;
+    padding: 10px 20px;
+    background-color: #23275c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: medium;
+}
+
+.side-nav {
+    margin-top:4rem;
+    width: 70px;
+  
+    height: 100%;
+    background-color: #23275c;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: width 0.3s ease;
+   
+    overflow: hidden;
+   
+}
+
+.side-nav.open {
+    width: 200px;
+  
+}
+
+.side-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.side-nav ul li {
+    padding: 15px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    
+}
+.side-nav ul .icon{
+    margin-right: 6px;
+}
+.side-nav ul li.active {
+    background-color: #524f7d;
+}
+
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 70px;
+   
+    transition: margin-left 0.3s ease;
+
+}
+
+.side-nav.open+.main-content {
+    margin-left: 200px;
+   
+}
+
+
+.submenu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+}
+
+.submenu.open {
+    display: block;
+    padding-left: 2vw;
+    font-size: 0.9rem;
+}
+
+.submenu li {
+    padding: 10px;
+    cursor: pointer;
+    color: #fff;
+   
+}
+.submenu ul li.active {
+    background-color: #524f7d;
+}
+
+
+.submenu li:hover {
+    background-color: #524f7d;
+} */

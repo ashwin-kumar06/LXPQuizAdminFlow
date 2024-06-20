@@ -1,0 +1,85 @@
+.background-container_update {
+    background-color: #e6eefb;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin-top: -65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.basic-multi-select_learner {
+    background-color: #e6eefb;
+    color: #27235C;
+}
+
+.cardcolor_update {
+    background-color: #f0f0f0;
+    /* Changed to fully opaque white background for better contrast */
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgba(17, 13, 13, 0.1);
+    border: 2px solid #27235C;
+    margin-top: 50px;
+    width: 1400px;
+
+}
+
+/* .avatar-outline
+  {
+    width:200px;
+    height:200px;
+    border:5px solid #27235C;
+    border-radius:50%;
+  } */
+.get {
+    color: #27235C;
+}
+
+.form-control_dropdown {
+    margin-bottom: 15px;
+    border-color: #27235C;
+    /* Set input field outline color */
+    border-radius: 15px;
+    width: 425px;
+    height: 50px;
+
+}
+
+
+.form-control_update {
+    margin-bottom: 15px;
+    border-color: #27235C;
+    /* Set input field outline color */
+    border-radius: 15px;
+}
+
+.btn-secondary_update {
+    background-color: #27235C;
+    /* Set button color */
+    border-color: #27235C;
+    color: #fff;
+    /* Set button border color */
+}
+
+.btn-primary_update {
+    background-color: #27235C;
+    /* Set button color */
+    border-color: #27235C;
+    color: #fff;
+    /* Set button border color */
+}
+
+.btn-primary_update:disabled,
+.btn-secondary_update:disabled {
+    background-color: #6c757d;
+    /* Disabled button color */
+    border-color: #6c757d;
+    /* Disabled button border color */
+}
+
+.basic-multi-select {
+    margin-bottom: 15px;
+}

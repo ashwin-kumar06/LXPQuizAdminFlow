@@ -1,0 +1,30 @@
+#instructionpage{
+    margin-top:-45%;
+    margin-left:20%;
+    /* width:700px; */
+}
+
+.MuiCard-root{
+  width:700px;
+  height:80px;
+  margin-top:10%;
+    }
+
+#instructionpage-container{
+    height:585px;
+    width:1000px;
+    margin-left:20%;
+    margin-top:-45%;
+    background-color:rgb(237, 231, 231);
+}
+
+#instructionpage-card{
+    margin-top:40%;
+    margin-left:-120%;
+    height:400px;
+   
+}
+
+#divider{
+    background-color:black;
+}

@@ -1,0 +1,9 @@
+.pagenotfound{
+  width: 100%;
+  min-height: 100vh;
+  background-image:url(/src/assets/Admin/Images/404_page_cover.jpg);
+  /* background-image:url(/src/assets/Admin/Images/Oops.gif); */
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
