@@ -9,7 +9,7 @@ export const BulkUploadQuestion = async (files,quizId) => {
       formData.append('file', file);
  
       try {
-        const response = await axios.post(`http://localhost:5199/api/BulkQuestion/ImportQuizData?quizId=${quizId}`, formData, {
+        const response = await axios.post(`http://localhost:5199/api/ExcelToJson/ConvertExcelToJson?quizId=${quizId}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

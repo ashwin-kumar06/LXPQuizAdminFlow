@@ -70,7 +70,7 @@ export const QuizFeedback = () => {
     console.log("checkrequestody",requestBody);
     try{
     await QuizFeedbackApi(requestBody);
-    setFbQuestion({ ...fbQuestion,question:"", options: "",});
+    setFbQuestion({ ...fbQuestion,question:"", options: ""});
   //   setTimeout(function () {
   //     window.location.reload(1);
   // }, 500);
@@ -123,7 +123,7 @@ export const QuizFeedback = () => {
 
   return (
     <>
-    <Container fluid style={{marginTop:'700px'}}>
+    <Container fluid style={{marginTop:'600px'}}>
     <div>
       <button
         class="btn btn-light"
@@ -143,7 +143,7 @@ export const QuizFeedback = () => {
 
       <div>
         <div>
-          <h4 className="text" style={{ marginLeft: "5%", marginTop: "-35%" }}>
+          <h4 className="text" style={{ marginLeft: "3%", marginTop: "-35%" }}>
             <b>Feedback Questions for {quizName} Quiz</b>
           </h4>
           <button
@@ -158,7 +158,7 @@ export const QuizFeedback = () => {
             Add Feedback Questions
           </button>
           <GetAllFeedbacks />
-          <Modal show={showAddfbModal} onHide={handleCloseAddfbQuestionModal} style={{marginTop:"2.5%",marginLeft:"4%"}}>
+          <Modal show={showAddfbModal} onHide={handleCloseAddfbQuestionModal}  backdrop='static' style={{marginTop:"2.5%",marginLeft:"4%"}}>
             <Modal.Header
               closeButton
               style={{ backgroundColor: "#23275c", color: "whitesmoke" }}
@@ -168,7 +168,7 @@ export const QuizFeedback = () => {
             </Modal.Header>
             <Modal.Body style={{ backgroundColor: "#F9F5F6" }}>
               <div className="form-group">
-                <label>Question Type</label>
+                <label>Question Type <b id="required">*</b></label>
                 <select
                   className="form-control"
                   value={selectedfbType}
@@ -242,7 +242,7 @@ export const QuizFeedback = () => {
               )}
             </Modal.Body>
 
-            <Modal.Footer style={{ backgroundColor: "F9F5F6" }}>
+            <Modal.Footer style={{ backgroundColor: "#F9F5F6" }}>
               <Button
                 variant="default"
                 style={{ backgroundColor: "#365486", color: "whitesmoke" }}

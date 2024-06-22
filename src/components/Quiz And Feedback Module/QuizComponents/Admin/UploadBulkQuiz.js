@@ -164,6 +164,7 @@ import { BulkUploadQuestion } from '../../../../middleware/Quiz And Feedback Mod
 import Exceltemplate from "../../../../assets/Quiz And Feedback Module/ExcelTemplate/Bulk upload format.xlsx"
 import { Button, Container } from 'react-bootstrap';
 import { FcInfo } from "react-icons/fc";
+import Swal from "sweetalert2";
 
 const UploadBulkQuiz = () => {
   const dispatch = useDispatch();
@@ -222,6 +223,24 @@ const UploadBulkQuiz = () => {
     e.preventDefault();
     console.log("handleFileUpload: ", quizId);
     BulkUploadQuestion(files, quizId);
+    const Toast = Swal.mixin({
+      className:"swal2-toast",
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 2000,
+      background:'green',
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Bulk Uploaded Successfully",
+      color:'white'
+    });
     navigate(`/createquiz`);
   };
   return (

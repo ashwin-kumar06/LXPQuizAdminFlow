@@ -1,84 +1,90 @@
 #QuizCard {
   margin-left: 200px;
   width: 900px;
-  height:400px;
+  height: 400px;
   /* margin-left: 18%;
   margin-top: -50%; */
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 5px 0px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
 }
-.col-sm-3{
+
+.col-sm-3 {
   font-weight: bold;
 }
 
-#bulklink,#newquelink{
+#bulklink,
+#newquelink {
   text-decoration: none;
-  color:rgba(128, 128, 128);
+  color: rgba(128, 128, 128);
 }
 
-#questitle{
-  color:grey;
+#questitle {
+  color: grey;
 }
+
 .question-grid {
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin-top:20%;
-  margin-left:25%;
-  border:2px solid #ccc;
-  border-radius:5px;
-  width:280px;
- 
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: fit-content;
+  height: fit-content;
+
 }
-#QuizCard.card-body,.header{
-background-color:#F9F5F6;
+
+#QuizCard.card-body,
+.header {
+  background-color: #F9F5F6;
 }
 
 
 
 .question-number {
-  margin:10px;
-  width:50px;
-  height:55px;
+  margin: 5px;
+  width: 40px;
+  height: 40px;
   border: 1px solid #ccc;
-  border-radius:5px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor:pointer;
-  background-color:rgb(237, 231, 231);
-  font-weight:500;
- 
+  cursor: pointer;
+  background-color: rgb(237, 231, 231);
+  font-weight: 500;
+
 
 }
 
 .question-grid-container {
-  top:150px; /* Adjust this value to place it from the top */
-  left:120px; /* Adjust this value to place it from the left */
-  z-index:900; /* This ensures it stays above other content */
+  position: fixed;
+}
+
+.question-details-container{
+  margin-left: 300px;
 }
 
 
 .question-number:hover {
   border: 2px solid rgb(96, 96, 188);
 }
+
 .question-number.active {
-background-color:#365486;
-border-color:#365486;
-color: white;
+  background-color: #365486;
+  border-color: #365486;
+  color: white;
 }
 
-.containertitle{
-font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
-
+.containertitle {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.text{
-font-style:unset;
-color: #365486;
-font-weight:500;
-/* color:slategrey; */
+.text {
+  /* font-style: unset; */
+  /* color: #365486; */
+  font-weight:900;
+  /* color:slategrey; */
 }
 
 
@@ -89,45 +95,43 @@ font-weight:500;
   position: inherit;
 } */
 
-#required{
-  color:Red;
+#required {
+  color: Red;
 }
 
-#editicon{
-  font-size:30;
-  margin-left:90%
+#editicon {
+  font-size: 30;
+  margin-left: 90%
 }
 
-#delicon{
-  font-size:28;
-  margin-left:2%;
+#delicon {
+  font-size: 28;
+  margin-left: 2%;
 }
 
-#id{
-  font-weight:bold;
-}
-
-#filter{
-  margin-top:-23%;
-  margin-left:75%;
+#id {
+  font-weight: bold;
 }
 
 
-#search{
-position: relative;
-left:50%;
-top:-130px !important;
-padding: 8px 12px;
+
+
+#search {
   border: 1px solid #ccc;
   border-radius: 20px;
-  width:230px;
+  width: 230px;
+  margin-bottom: 200px;
 }
 
-.quiz-content{
+.quiz-content {
   margin-top: 6%;
 }
 
-.question-template-container{
-  display: block;
-  margin-top: 400px;
+.question-template-container {
+ 
+  margin-top: 100px;
+}
+
+.swal2-toast{
+  margin-top:50px !important;
 }

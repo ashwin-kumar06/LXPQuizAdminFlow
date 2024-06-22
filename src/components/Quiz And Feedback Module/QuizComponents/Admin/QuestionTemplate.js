@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import BasicPagination from "../../../../components/Quiz And Feedback Module/QuizComponents/Admin/Pagination";
-import { FaTrashCan } from "react-icons/fa6";
-import { AiFillEdit } from "react-icons/ai";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { IconButton, Stack, Tooltip } from '@mui/material';    // modification for  imports quizteam 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -20,13 +23,15 @@ import { FaMinus, FaPlus } from 'react-icons/fa';
 import { Container } from 'react-bootstrap';
 import { set } from 'react-hook-form';
 import { FetchQuizQuestionsApi } from '../../../../middleware/Quiz And Feedback Module/Admin/FetchQuizQuestionsApi';
+import "../../../../Styles/Quiz And Feedback Module/QuestionTemplate.css";
+import Swal from "sweetalert2";
 
 const QuestionTemplate = () => {
   const quizId = sessionStorage.getItem("quizId");
 
   useEffect(() => {
     fetchQuestions(quizId);
-  }, []);
+  });
 
   const dispatch = useDispatch();
   const [questions, setQuestions] = useState([]);
@@ -59,6 +64,8 @@ const QuestionTemplate = () => {
     correctOptions: ["", "", ""],
   });
 
+  const [showPopup,setShowPopup]=useState(false);
+
 
   // const questions = useSelector((state) => state.quizQuestions.quizQuestions);
 
@@ -75,16 +82,27 @@ const QuestionTemplate = () => {
 
   const handleDeleteQuestion = (quizQuestionId) => {
     setQuestionToDelete(quizQuestionId);
-    setShowConfirmationModal(true);
+   setShowPopup(true);
   };
 
-  const handleConfirmDelete = () => {
-    dispatch(deleteQuizQuestionRequest(questionToDelete));
-    setShowConfirmationModal(false);
+  // const handleConfirmDelete = () => {
+  //   dispatch(deleteQuizQuestionRequest(questionToDelete));
+  //   setShowConfirmationModal(false);
+  //   setQuestionToDelete(null);
+  //   window.location.reload();
+  // };
+
+  const handleConfirmDelete = async () => {
+    // Dispatch the delete request
+    await dispatch(deleteQuizQuestionRequest(questionToDelete));
+ 
+    // Update the questions state to remove the deleted question
+    setQuestions(questions.filter(question => question.quizQuestionId !== questionToDelete));
+ 
+    // Close the popup and reset questionToDelete
+    setShowPopup(false);
     setQuestionToDelete(null);
-    window.location.reload();
   };
-
 
   const handleOpenEditQuestionModal = async (quizQuestionId) => {
     try {
@@ -242,9 +260,28 @@ const QuestionTemplate = () => {
       UpdateQuizQuestionsApi(requestBody)
       handleCloseEditQuestionModal();
     }
-    setTimeout(function () {
-      window.location.reload(1);
-    }, 1000);
+    // setTimeout(function () {
+    //   window.location.reload(1);
+    // }, 1000);
+    const Toast = Swal.mixin({
+      className:"swal2-toast",
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 2000,
+      background:'green',
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Question Updated Successfully",
+      color:'white'
+    });
+
   };
 
   const validateField = (fieldName, value, index = null) => {
@@ -314,7 +351,7 @@ const QuestionTemplate = () => {
   };
 
   const handleAddCorrectOption = () => {
-    if (numCorrectOptions < newQuestion.options.length) {
+    if (numCorrectOptions < 3) {
       setNumCorrectOptions(numCorrectOptions + 1);
       setNewQuestion((prevState) => ({
         ...prevState,
@@ -356,6 +393,8 @@ const QuestionTemplate = () => {
       }));
     }
   };
+
+
   const handleSaveQuestion = () => {
     let tempErrors = {
       question: "",
@@ -363,6 +402,13 @@ const QuestionTemplate = () => {
       options: "",
       correctOptions: "",
     };
+
+    let hasCorrectOption = false;
+    if (newQuestion.questionType === "MCQ" || newQuestion.questionType === "T/F") {
+      hasCorrectOption = !!newQuestion.correctOptions[0];
+    } else {
+      hasCorrectOption = newQuestion.correctOptions.some((option) => option);
+    }
 
     if (!newQuestion.question) {
       tempErrors.question = "Question is required";
@@ -374,14 +420,14 @@ const QuestionTemplate = () => {
       tempErrors.options = "At least one option is required";
     }
 
-    setErrors(tempErrors);
-
     if (
       tempErrors.question ||
       tempErrors.questionType ||
       tempErrors.options ||
-      tempErrors.correctOptions
+      !hasCorrectOption
     ) {
+      tempErrors.correctOptions = "Correct option is required";
+      setErrors(tempErrors);
       return;
     }
 
@@ -392,26 +438,28 @@ const QuestionTemplate = () => {
       options: newQuestion.options.map((option, index) => ({
         option: option,
         isCorrect:
-          newQuestion.questionType === "MCQ" ||
-            newQuestion.questionType === "T/F"
+          newQuestion.questionType === "MCQ" || newQuestion.questionType === "T/F"
             ? newQuestion.correctOptions[0] === option
             : newQuestion.correctOptions.includes(option),
       })),
     };
 
+
+
     PostSingleQuestion(requestBody);
-    // handleCloseAddQuestionModal();
-    setTimeout(function () {
-      window.location.reload(1);
-    }, 1000);
+    setNewQuestion({...newQuestion, question:"",  options: ["", "", "", "", "", "", "", ""], correctOptions: ["", "", ""]})
+    handleCloseAddQuestionModal();
+    // setTimeout(function () {
+    //   window.location.reload(1);
+    // }, 1000);
   };
 
   return (
     <Container >
       <div className='question-template-container'>
-        <div className="form-group row">
-          <div className="col-sm-2" id="filter">
-            <select
+        <div className="" style={{}}>
+          <div className=" " id="filter">
+            {/* <select
               id="questionType"
               className="form-control"
               value={selectedFilterQuestionType}
@@ -424,23 +472,43 @@ const QuestionTemplate = () => {
               <option value="MCQ">MCQ</option>
               <option value="MSQ">MSQ</option>
               <option value="TF">True/False</option>
-            </select>
+            </select> */}
+            <Box sx={{ width: 190 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Question Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="questionType"
+                  value={selectedFilterQuestionType}
+                  label="Age"
+                  onChange={(e) => setSelectedFilterQuestionType(e.target.value)}
+                >
+                  <MenuItem value={""}>All</MenuItem>
+                  <MenuItem value={"MCQ"}>MCQ</MenuItem>
+                  <MenuItem value={"MSQ"}>MSQ</MenuItem>
+                  <MenuItem value={"T/F"}>True/False</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </div>
+          <div style={{ textAlign:'center' }} >
+            <input
+              id="search"
+              type="search"
+              placeholder="Search..."
+              className="search-box"
+              onChange={handleSearchChange}
+            />
           </div>
         </div>
-        <input
-          id="search"
-          type="search"
-          placeholder="Search..."
-          className="search-box"
-          onChange={handleSearchChange}
-        />
+
 
         <div className="question-template">
           {error && <p>Error: {error}</p>}
           {currentQuestions.length > 0 ? (
             <div style={{ marginTop: "-15%" }}>
               <h5>Uploaded Questions</h5>
-              <div style={{ marginTop: "-6px", marginLeft: "68.5%" }}>
+              <div style={{ marginLeft: "70%" }}>
                 <div>
                   <BasicPagination
                     totalQuestions={filteredQuestions.length}
@@ -457,7 +525,7 @@ const QuestionTemplate = () => {
                   style={{ backgroundColor: "rgb(237, 231, 231)" }}
                 >
                   <div className="d-flex justify-content-end header">
-                    <Tooltip title="Edit quiz"><IconButton aria-label="Editquiz" onClick={() => { handleOpenEditQuestionModal(question.quizQuestionId) }}  ><EditIcon style={{ color: "#365486" }} variant="outlined" /> </IconButton></Tooltip>
+                    <Tooltip title="Edit Question"><IconButton aria-label="Editquiz" onClick={() => { handleOpenEditQuestionModal(question.quizQuestionId) }}  ><EditIcon style={{ color: "#365486" }} variant="outlined" /> </IconButton></Tooltip>
 
                     {/* <a
                       onClick={() => {
@@ -473,7 +541,17 @@ const QuestionTemplate = () => {
                         }}
                       />
                     </a> */}
-                    <Tooltip title="Delete quiz"><IconButton aria-label="deletequiz" onClick={() => {handleDeleteQuestion(question.quizQuestionId)}}  ><DeleteIcon style={{ color: "C80036" }} /></IconButton></Tooltip>
+                    <Tooltip title="Delete Question"><IconButton aria-label="deletequiz" onClick={() => { handleDeleteQuestion(question.quizQuestionId) }}  ><DeleteIcon style={{ color: "C80036" }} /></IconButton></Tooltip>
+                    {showPopup && (
+                      <div id="popupQuizQuestionDelete">
+                        <div id="popup-contentQuizQuestionDelete">
+                          <button id="popup-close-buttonQuizQuestionDelete" onClick={() => setShowPopup(false)}>×</button>
+                          <p id='QuizQuestionDelete' style={{marginTop:"5%"}}>Are you sure want to Delete the Question?</p>
+                          <button onClick={handleConfirmDelete} id='delete-btn'>Delete</button>
+                          <button onClick={() => setShowPopup(false)}>Cancel</button>
+                        </div>
+                      </div>
+                    )}
 
                     {/* <a
                       onClick={() => {
@@ -490,7 +568,7 @@ const QuestionTemplate = () => {
                       />
                     </a> */}
                   </div>
-                  <div className="card-body" style={{backgroundColor:"#F9F5F6"}}>
+                  <div className="card-body" style={{ backgroundColor: "#F9F5F6" }}>
                     <h5 className="card-title">
                       Question Type : {question.questionType}
                     </h5>
@@ -532,7 +610,7 @@ const QuestionTemplate = () => {
                     <button
                       onClick={handleOpenAddQuestionModal}
                       className="btn btn-light mt-3 mb-5 float-right"
-                      style={{ color: "white" , backgroundColor:"#365486" }}
+                      style={{ color: "white", backgroundColor: "#365486" }}
                     >
                       Add More Question
                     </button>
@@ -544,7 +622,7 @@ const QuestionTemplate = () => {
             <p>No questions match your search.</p>
           )}
         </div>
-        <Modal show={showAddQuestionModal} onHide={handleCloseAddQuestionModal} style={{ marginTop: "2.5%", marginLeft: "3%" }}>
+        <Modal show={showAddQuestionModal} onHide={handleCloseAddQuestionModal}   backdrop='static' style={{ marginTop: "2.5%", marginLeft: "3%" }}>
           <Modal.Header
             closeButton
             style={{ backgroundColor: "#23275c", color: "whitesmoke" }}
@@ -579,6 +657,9 @@ const QuestionTemplate = () => {
                     value={newQuestion.question}
                     onChange={(e) => handleChange(-1, "question", e.target.value)}
                   />
+                  {errors.question && (
+                    <div style={{ color: "red" }}>{errors.question}</div>
+                  )}
                 </div>
                 {[...Array(numOptions)].map((_, index) => (
                   <div className="form-group" key={index}>
@@ -592,17 +673,22 @@ const QuestionTemplate = () => {
                           handleChange(index, "options", e.target.value)
                         }
                       />
+
                       {index >= 5 && (
                         <div className="input-group-append">
-                          <button className="btn btn-default" style={{ backgroundColor: "#365486", color: "whitesmoke" }} onClick={() => handleRemoveOption(index)}>
+                          <button className="btn btn-default" style={{ backgroundColor: 'rgb(179, 35, 35)', color: "whitesmoke", width: 50 }} onClick={() => handleRemoveOption(index)}>
                             <FaMinus style={{ fontSize: "10px" }} />
                           </button>
                         </div>
                       )}
+
                     </div>
+                    {errors.options && (
+                      <div style={{ color: "red" }}>{errors.options}</div>
+                    )}
                   </div>
                 ))}
-                <div className="form-group mt-3">
+                <div className="form-group mt-3" >
                   <button className="btn btn-default" style={{ backgroundColor: "#365486", color: "whitesmoke" }} onClick={handleAddOption}>
                     <FaPlus style={{ fontSize: "10px" }} /> Add Option
                   </button>
@@ -627,16 +713,17 @@ const QuestionTemplate = () => {
                       </select>
                       {index >= 1 && (
                         <div className="input-group-append">
-                          <button className="btn btn-default" style={{ backgroundColor: "#365486", color: "whitesmoke" }} onClick={() => handleRemoveCorrectOption(index)}>
-                            <FaMinus style={{ fontSize: "10px" }} />
+                          <button className="btn btn-default" style={{ backgroundColor: "rgb(179, 35, 35)", color: "whitesmoke", width: 50 }} onClick={() => handleRemoveCorrectOption(index)}>
+                            <FaMinus style={{ fontSize: "15px" }} />
                           </button>
                         </div>
                       )}
                     </div>
+
                   </div>
                 ))}
                 <div className="form-group mt-3">
-                  <button className="btn btn-default" style={{ backgroundColor: "#365486", color: "whitesmoke" }} onClick={handleAddCorrectOption}>
+                  <button className="btn btn-default" style={{ backgroundColor: "#365486", color: "whitesmoke", width: 200 }} onClick={handleAddCorrectOption}>
                     <FaPlus style={{ fontSize: "10px" }} />Add Correct Option
                   </button>
                 </div>
@@ -681,6 +768,7 @@ const QuestionTemplate = () => {
                     onChange={(e) =>
                       handleChange(0, "correctOptions", e.target.value)
                     }
+                    required
                   >
                     <option value="">Select Correct Option</option>
                     {newQuestion.options.map((option, index) => (
@@ -763,7 +851,7 @@ const QuestionTemplate = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Modal show={showEditQuestionModal} onHide={handleCloseEditQuestionModal} style={{ marginTop: "2.5%", marginLeft: "3%" }} >
+        <Modal show={showEditQuestionModal} onHide={handleCloseEditQuestionModal}  backdrop='static' style={{ marginTop: "2.5%", marginLeft: "3%" }} >
           <Modal.Header
             closeButton
             style={{ backgroundColor: "#23275c", color: "whitesmoke" }}
@@ -864,7 +952,7 @@ const QuestionTemplate = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)} style={{ marginTop: "2.5%", marginLeft: "3%" }}>
+        <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)}  backdrop='static' style={{ marginTop: "2.5%", marginLeft: "3%" }}>
           <Modal.Header closeButton>
             <Modal.Title>Confirm Delete</Modal.Title>
           </Modal.Header>

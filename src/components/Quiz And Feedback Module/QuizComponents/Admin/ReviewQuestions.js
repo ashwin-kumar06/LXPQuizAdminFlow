@@ -179,10 +179,10 @@ export const ReviewQuestions = () => {
         <>
             <Container fluid style={{ marginTop: '300px' }}>
                 <div>
-                    <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "-25%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }}>Back</button>
+                    <button class="btn btn-light" style={{ marginLeft: "95%", marginTop: "-29%", backgroundColor: "#365486", color: "white", width: '50' }} onClick={() => { handleNavigate() }}>Back</button>
                     <div>
 
-                        <div className='question-template-container' style={{ display: 'flex', marginTop: "-5%" }}>
+                        <div className='question-template-container' style={{ display: 'flex', marginTop: "-10%" }}>
                             <div className="question-grid-container ">
                                 {questions && questions.length > 0 && (
                                     <div className="question-grid">
@@ -198,20 +198,19 @@ export const ReviewQuestions = () => {
                                     </div>
                                 )}
                             </div>
-                            <Container style={{ width: 700 }}>
+                            <Container style={{ width:1200}}>
                                 <div className="question-details-container">
 
                                     {error && <p>Error: {error}</p>}
                                     {questions && questions.length > 0 && (
                                         <div>
-                                            <h5 className='text' style={{ marginTop: "-5%" }}>Review Questions</h5>
+                                            <h5 className='text' style={{ marginTop: "-5%" , marginLeft:"1%" }}>Review Questions</h5>
                                             {questions.map((question, index) => (
                                                 <div
                                                     key={index}
                                                     id={`question-${index}`} // Add an ID to each question card
                                                     className='card mt-3'>
-                                                    <div className='d-flex justify-content-end'></div>
-                                                    <div className="card-body">
+                                                    <div className="card-body" style={{backgroundColor:"#F9F5F6"}}>
                                                         <h5 className="card-title">Question {question.questionNo}:</h5>
                                                         <input value={question.question} className='form-control' readOnly />
                                                         <div className="form-group">
@@ -285,7 +284,7 @@ export const ReviewQuestions = () => {
                                     </Modal.Footer>
                                 </Modal>
 
-                                <Modal show={showAddModal} onHide={handleCloseModal} style={{ marginTop: "2.5%", marginLeft: "3%" }}>
+                                <Modal show={showAddModal} onHide={handleCloseModal} backdrop='static' style={{ marginTop: "2.5%", marginLeft: "3%" }}>
                                     <Modal.Header closeButton style={{ backgroundColor: "#23275c" }}>
                                     </Modal.Header>
                                     <Modal.Body style={{ backgroundColor: "#F9F5F6" }}>
@@ -294,8 +293,8 @@ export const ReviewQuestions = () => {
                                         </div>
                                     </Modal.Body>
                                     <Modal.Footer style={{ backgroundColor: "#F9F5F6", display:'flex' }}>
-                                        <Button onClick={handleFeedback} className="btn btn-light mt-3 mb-3 " style={{ backgroundColor: "#365486", color: "white" }}>Add Feedback</Button>
-                                        <Button className="btn btn-light mt-3 mb-5" style={{ backgroundColor: "#365486", color: "white", marginLeft: "55%" }} onClick={handleClose}>Go to course</Button>
+                                        <Button onClick={handleFeedback} className="btn btn-light" style={{ backgroundColor: "#365486", color: "white" }}>Add Feedback</Button>
+                                        <Button className="btn btn-light" style={{ backgroundColor: "#365486", color: "white", marginLeft: "40%" }} onClick={handleClose}>Go to course</Button>
 
                                     </Modal.Footer>
                                 </Modal>

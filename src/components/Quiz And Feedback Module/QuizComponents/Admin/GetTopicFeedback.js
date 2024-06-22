@@ -11,6 +11,11 @@ import { updatetopicfeedbackRequest } from "../../../../actions/Quiz And Feedbac
 import { GetTopicFeedbackApi } from "../../../../middleware/Quiz And Feedback Module/Admin/GetTopicFeedbackApi";
 import GetByIDTopicFeedbackApi from "../../../../middleware/Quiz And Feedback Module/Admin/GetByIDTopicFeedbackApi";
 import DeleteTopicFeedbackApi from "../../../../middleware/Quiz And Feedback Module/Admin/DeleteTopicFeedbackApi";
+import { IconButton, Stack, Tooltip } from '@mui/material';    // modification for  imports quizteam
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import "../../../../Styles/Quiz And Feedback Module/QuestionTemplate.css";
+import Swal from "sweetalert2";
 
 export const GetTopicFeedback = () => {
   // const { topicFeedbackId } = useParams();
@@ -18,6 +23,7 @@ export const GetTopicFeedback = () => {
   //    (state) => state.fetchtopicfeedback.quizfeedback[0]
   //  );
   const courseId = sessionStorage.getItem('courseId');
+  const [showPopup, setShowPopup] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [topicfeedback, setGetAllfeedback] = useState();
   const [getfeedback, setGetFeedback] = useState();
@@ -61,7 +67,6 @@ export const GetTopicFeedback = () => {
   };
   const handleCloseEditQuestionModal = () => {
     setShowEditfbQuestionModal(false);
-    window.location.reload();
   };
 
   const handleOpenConfirmationModal = (topicFeedbackId) => {
@@ -131,6 +136,24 @@ export const GetTopicFeedback = () => {
     };
     console.log("requestBody", requestBody);
     dispatch(updatetopicfeedbackRequest(topicFeedbackId, requestBody));
+    const Toast = Swal.mixin({
+      className:"swal2-toast",
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 2000,
+      background:'green',
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "TopicFeedback Updated Successfully",
+      color:'white'
+    });
     //   setTimeout(function(){
     //     window.location.reload(1);
     //  }, 1000);
@@ -163,6 +186,7 @@ export const GetTopicFeedback = () => {
 
   const handleDeletetopicfbQuestion = async (topicFeedbackId) => {
     await DeleteTopicFeedbackApi(topicFeedbackId);
+    setShowPopup(false);
     // Optionally, you can add a success message or perform any other actions after deleting the feedback question
   };
 
@@ -190,7 +214,7 @@ export const GetTopicFeedback = () => {
       <div className="question template container">
         <div>
           {topicfeedback ? <h5>
-            <b>Review Feedback Questions</b>
+            <b style={{marginLeft:"2%"}}>Review Feedback Questions</b>
           </h5> : <h5>No feedback questions</h5>}
           {topicfeedback && topicfeedback.length > 0 ? (
             topicfeedback.map((feedback, index) => (
@@ -200,7 +224,8 @@ export const GetTopicFeedback = () => {
                 style={{ backgroundColor: "#F9F5F6" }}
               >
                 <div className="d-flex justify-content-end">
-                  <a
+                <Tooltip title="Edit Feedback"><IconButton aria-label="Editquiz" onClick={() => { handleOpenEditQuestionModal(feedback.topicFeedbackQuestionId) }}><EditIcon style={{ color: "#365486" }} variant="outlined" /> </IconButton></Tooltip>
+                  {/* <a
                     onClick={() => {
                       handleOpenEditQuestionModal(feedback.topicFeedbackQuestionId);
                     }}
@@ -213,7 +238,25 @@ export const GetTopicFeedback = () => {
                     className="m-2 ms-3"
                   >
                     <FaTrashCan style={{ fontSize: "23", color: "#365486", cursor: "pointer" }} />
-                  </a>
+                  </a> */}
+                  <Tooltip title="Delete Feedback">
+                      <IconButton aria-label="deletequiz" onClick={()=>setShowPopup(true)} >
+                        <DeleteIcon style={{ color: "C80036" }} />
+                      </IconButton>
+                    </Tooltip>
+ 
+ 
+ 
+                    {showPopup && (
+                      <div id="popupQuizQuestionDelete">
+                        <div id="popup-contentQuizQuestionDelete">
+                          <button id="popup-close-buttonQuizQuestionDelete" onClick={() => setShowPopup(false)}>×</button>
+                          <p id='QuizQuestionDelete' style={{ marginTop: "5%" }}>Are you sure want to Delete the Feedback?</p>
+                          <button onClick={()=> handleDeletetopicfbQuestion(feedback.topicFeedbackQuestionId)} id='delete-btn'>Delete</button>
+                          <button onClick={() => setShowPopup(false)}>Cancel</button>
+                        </div>
+                      </div>
+                    )}
                 </div>
                 <div className="card-body">
                   <h5 className="card-title">
@@ -225,7 +268,7 @@ export const GetTopicFeedback = () => {
                     readOnly
                   />
                   <div className="form-group">
-                    <label>Options:</label>
+                    {/* <label>Options:</label> */}
                     {feedback.options &&
                       feedback.options.map((option, index) => (
                         <input
@@ -252,12 +295,12 @@ export const GetTopicFeedback = () => {
           style={{
             backgroundColor: "#365486",
             color: "white",
-            marginLeft: "85%",
+            marginLeft: "93%",
           }}
         >
           Submit
         </button> : <></>}
-        <Modal show={showAddModal} onHide={handleCloseModal}>
+        <Modal show={showAddModal} onHide={handleCloseModal}  backdrop='static' style={{ marginTop: "2.5%", marginLeft: "4%" }}>
           <Modal.Header
             closeButton
             style={{ backgroundColor: "#23275c" }}
@@ -288,6 +331,7 @@ export const GetTopicFeedback = () => {
         </Modal>
       </div>
       <Modal
+       backdrop='static'
         show={showEditfbQuestionModal}
         onHide={handleCloseEditQuestionModal}
         style={{ marginTop: "2.5%", marginLeft: "4%" }}

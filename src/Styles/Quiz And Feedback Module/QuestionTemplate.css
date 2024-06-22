@@ -1,0 +1,82 @@
+#popupQuizQuestionDelete {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+   
+  #popup-contentQuizQuestionDelete {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height:180px;
+    width:420px;
+    background-color:#F9F5F6;
+  }
+ 
+  #delete-btn {
+    background: transparent;
+    background-color:#C80036;
+    color:white;
+   
+  }
+   
+  #popup-contentQuizQuestionDelete button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+   
+ #popup-contentQuizQuestionDelete button:first-child {
+    /* background-color: #007bff; */
+    /* color: white; */
+    color: black;
+    padding: 6px;
+  }
+   
+ #popup-contentQuizQuestionDelete button:first-child:hover {
+    /* background-color: #0056b3; */
+    background-color: #0057b319;
+  }
+   
+ #popup-contentQuizQuestionDelete button:last-child {
+    background-color: #6c757d;
+    color: white;
+  }
+   
+  #popup-contentQuizQuestionDelete button:last-child:hover {
+    background-color: #5a6268;
+    /* background-color:#C80036; */
+  }
+   
+  #popup-close-buttonQuizQuestionDelete{
+    position: absolute;
+    top:-10px;
+    right:-5px;
+    background:transparent;
+    border:none;
+    font-size:1.2em;
+    cursor: pointer;
+    /* color:"#C80036"; */
+    color: #aaa;
+  }
+   
+  #popup-close-buttonQuizQuestionDelete:hover {
+    color: #000;
+  }
+   
+#QuizQuestionDelete{
+  font-size:large;
+}
+ 

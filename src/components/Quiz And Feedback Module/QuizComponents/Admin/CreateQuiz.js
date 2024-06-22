@@ -29,6 +29,7 @@ import { editQuizDetailsRequest } from "../../../../actions/Quiz And Feedback Mo
 import QuestionTemplateView from "../../../../View/Quiz And Feedback Module/QuestionTemplateView";
 import { fetchQuizIdFailure } from "../../../../actions/Quiz And Feedback Module/Admin/FetchQuizIdAction";
 import { Container } from "react-bootstrap";
+import Swal from "sweetalert2";
 import CreateQuizApi from "../../../../middleware/Quiz And Feedback Module/Admin/CreateQuizApi";
 
 export const Home = () => {
@@ -37,7 +38,7 @@ export const Home = () => {
     const courseId = sessionStorage.getItem('courseId');
     const [button, setButton] = useState(true);
     // console.log("create page topic id", topicId);
-    const [showQuestions, setShowQuestions] = useState(false);
+    const [showQuestions, setShowQuestions] = useState(true);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [showOptions, setShowOptions] = useState(false);
@@ -86,14 +87,7 @@ export const Home = () => {
         event.target.nextSibling.style.display = showOptions ? 'none' : 'block';
     };
 
-    const isFormComplete = () => {
-        return (
-            quizTitle.trim() !== '' &&
-            duration > 0 &&
-            passMark > 0 &&
-            attemptsAllowed > 0
-        );
-    };
+
 
     const toggleQuestions = () => {
         setShowQuestions(!showQuestions);
@@ -115,25 +109,21 @@ export const Home = () => {
     const handleQuizTitleChange = (e) => {
         ValidationQuizTitle(e.target.value, setError, setQuizTitle);
         handleQuizChange(e);
-
     };
-
+    
     const handleInputChange = (e) => {
         ValidationDuration(e.target.value, setDuration, setErrorDuration);
         handleQuizChange(e);
-
     };
-
+    
     const handlemarkChange = (e) => {
         ValidationGrade(e.target.value, setPassMark, setErrormark);
         handleQuizChange(e);
-
     };
-
+    
     const handleattemptsChange = (e) => {
         ValidationAttempts(e.target.value, setAttemptsAllowed, setErrorAttempt);
         handleQuizChange(e);
-
     };
 
     const handleOpenAddQuestionModal = () => {
@@ -157,10 +147,19 @@ export const Home = () => {
     }
 
     const handleQuizChange = (e) => {
-        setQuizDetails({ ...quizDetails, [e.target.name]: e.target.value });
+        const updatedQuizDetails = { ...quizDetails, [e.target.name]: e.target.value };
+        setQuizDetails(updatedQuizDetails);
         setQuizData({ ...quizData, [e.target.name]: e.target.value });
-        setFormComplete(isFormComplete());
+        setFormComplete(isFormComplete(updatedQuizDetails));
+    };
 
+    const isFormComplete = (details) => {
+        return (
+            details.nameOfQuiz.trim() !== '' &&
+            Number(details.duration) > 0 &&
+            Number(details.passMark) > 0 &&
+            Number(details.attemptsAllowed) > 0
+        );
     };
 
     const handleSubmit = () => {
@@ -202,17 +201,57 @@ export const Home = () => {
         console.log("update", updatedQuizData);
         dispatch(editQuizDetailsRequest(updatedQuizData));
         handleCloseQuizEditModal();
+        const Toast = Swal.mixin({
+            className:"swal2-toast",
+            toast: true,
+            position: "top",
+            showConfirmButton: false,
+            timer: 2000,
+            background:'green',
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Quiz Updated Successfully",
+            color:'white'
+          });
+
     };
 
     const handleDeleteQuiz = (quizId) => {
+        setShowQuestions(false);
         console.log('Entered Title:', inputQuizTitle);
         console.log('Actual Quiz Title:', quizData.nameOfQuiz);
 
         if (inputQuizTitle === quizData.nameOfQuiz) {
             DeleteQuizDetails(quizId);
-            alert('Quiz deleted successfully');
+            const Toast = Swal.mixin({
+                className:"swal2-toast",
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 2000,
+                background:'green',
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Quiz deleted successfully",
+                color:'white'
+              });
+            // alert('Quiz deleted successfully');
             handleCloseQuizDeleteModal();
+            setTimeout(() => {
             navigate(`/addtopic/${courseId}`)
+            }, 2000);
             dispatch(fetchQuizIdFailure(topicId))
         } else {
             setErrorDeleteQuiz('The QuizTitle you entered does not match !');
@@ -282,17 +321,17 @@ export const Home = () => {
                                         ) : (
                                             <div className="form-group" style={{ textAlign: 'center' }}>
                                                 <div className="">
-                                                    <Button
-                                                        type="submit"
-                                                        className="btn btn-primary"
-                                                        onClick={(e) => {
-                                                            handleUploadClick(e);
-                                                        }}
-                                                        style={{ color: 'white', width: 200 }}
-                                                        disabled={!formComplete}
-                                                    >
-                                                        <FaUpload /> Import Question
-                                                    </Button>
+                                                <Button
+    type="submit"
+    className="btn btn-primary"
+    onClick={(e) => {
+        handleUploadClick(e);
+    }}
+    style={{ color: 'white', width: 200 }}
+    disabled={!formComplete}
+>
+    <FaUpload /> Import Question
+</Button>
                                                 </div>
                                             </div>
                                         )}
@@ -302,7 +341,7 @@ export const Home = () => {
                         </div>
                     </form>
                     {/* --------------------------------------------------------------*/}
-                    {quizId ? <div style={{ textAlign: 'center', marginTop: 50 }}>
+                    {/* {quizId ? <div style={{ textAlign: 'center', marginTop: 50 }}>
                         <Button
                             type="submit"
                             className="btn btn-light"
@@ -317,7 +356,7 @@ export const Home = () => {
                         >
                             {showQuestions ? "Hide Questions" : "View Questions"}
                         </Button>
-                    </div> : <></>}
+                    </div> : <></>} */}
                     {showQuestions && quizId ? (
                         <div className="">
                             <QuestionTemplateView />
@@ -329,8 +368,8 @@ export const Home = () => {
                         <button onClick={handleSubmit} className="btn btn-light mt-3 mb-5 float-left" style={{ color: "white", marginLeft: "92%" ,  backgroundColor:"#365486" }}>Proceed</button>
                     </div> : <div></div>}
                     {/* DeleteQuiz */}
-                    <Modal show={showQuizDeleteModal} onHide={handleCloseQuizDeleteModal} style={{ marginTop: "2.5%", marginLeft: "4%" }}>
-                        <Modal.Header style={{ backgroundColor: "#23275c", color: "whitesmoke" }}>
+                    <Modal show={showQuizDeleteModal} onHide={handleCloseQuizDeleteModal} backdrop='static' style={{ marginTop: "2.5%", marginLeft: "4%" }}>
+                        <Modal.Header  closeButton style={{ backgroundColor: "#23275c", color: "whitesmoke" }}>
                             <Modal.Title><h5>Deleting the Quiz</h5></Modal.Title>
                         </Modal.Header>
                         <Modal.Body style={{ backgroundColor: "#F9F5F6" }} >
@@ -351,7 +390,7 @@ export const Home = () => {
                     </Modal>
 
                     {/* EditQuiz */}
-                    <Modal show={showQuizEditModal} onHide={handleCloseQuizEditModal} style={{ marginTop: "2.5%", marginLeft: "4%" }}>
+                    <Modal show={showQuizEditModal} onHide={handleCloseQuizEditModal} backdrop='static' style={{ marginTop: "2.5%", marginLeft: "4%" }}>
                         <Modal.Header closeButton style={{ backgroundColor: "#23275c", color: "whitesmoke" }}>
                             <Modal.Title><h5>Quiz Editor</h5></Modal.Title>
                         </Modal.Header>
